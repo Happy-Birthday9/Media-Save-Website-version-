@@ -3,285 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#070b16">
-<meta name="description" content="Media Save — fast TikTok video and audio downloader.">
-<title>Media Save — Download Anything</title>
+<meta name="theme-color" content="#060816">
+<title>Media Save 🚀</title>
 <style>
-:root{
- --bg:#050816;--bg2:#0a1022;--card:rgba(15,23,42,.62);--card2:rgba(255,255,255,.055);
- --line:rgba(255,255,255,.12);--text:#f8fafc;--muted:#9aa8bf;
- --p:#8b5cf6;--p2:#6366f1;--c:#22d3ee;--g:#34d399;--r:#fb7185;
-}
+:root{--bg:#050816;--card:rgba(13,20,42,.68);--line:rgba(255,255,255,.12);--txt:#f8fafc;--muted:#94a3b8;--p:#8b5cf6;--c:#22d3ee;--g:#34d399}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
- min-height:100vh;color:var(--text);
- font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
- background:
- radial-gradient(circle at 10% 10%,rgba(139,92,246,.25),transparent 28%),
- radial-gradient(circle at 90% 18%,rgba(34,211,238,.16),transparent 26%),
- radial-gradient(circle at 50% 90%,rgba(236,72,153,.10),transparent 30%),var(--bg);
- overflow-x:hidden;
-}
-body:before{
- content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
- background-image:radial-gradient(rgba(255,255,255,.25) 1px,transparent 1px);
- background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 75%);z-index:-1;
-}
-.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:-1;opacity:.16;animation:drift 9s ease-in-out infinite alternate}
-.o1{width:300px;height:300px;background:#8b5cf6;left:-130px;top:28%}.o2{width:280px;height:280px;background:#06b6d4;right:-120px;top:48%;animation-delay:2s}
-@keyframes drift{to{transform:translateY(-55px) scale(1.15)}}
-.container{width:min(1120px,92%);margin:auto}
-nav{
- margin-top:18px;padding:13px 15px;border:1px solid var(--line);border-radius:20px;
- background:rgba(5,8,22,.62);backdrop-filter:blur(20px);display:flex;align-items:center;
- justify-content:space-between;position:sticky;top:12px;z-index:20;box-shadow:0 15px 55px rgba(0,0,0,.25)
-}
-.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:17px}
-.brandIcon{
- width:43px;height:43px;display:grid;place-items:center;border-radius:14px;
- background:linear-gradient(135deg,var(--p),var(--c));box-shadow:0 10px 35px rgba(99,102,241,.35);
- animation:logo 3s ease-in-out infinite
-}
-@keyframes logo{50%{transform:rotate(4deg) scale(1.06);box-shadow:0 12px 42px rgba(34,211,238,.4)}}
-.navlinks{display:flex;gap:8px}.navlinks button{padding:10px 13px;border:1px solid var(--line);background:var(--card2);color:#fff;border-radius:12px;cursor:pointer;transition:.25s}
-.navlinks button:hover{transform:translateY(-2px);background:rgba(255,255,255,.1)}
-.hero{text-align:center;padding:90px 0 30px}
-.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid rgba(139,92,246,.35);background:rgba(139,92,246,.09);color:#ddd6fe;font-size:13px;animation:up .7s both}
-.dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 15px #34d399}
-h1{font-size:clamp(44px,8vw,86px);line-height:.95;letter-spacing:-5px;margin:22px 0 20px;animation:up .8s .08s both}
-.grad{background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9,#fff);background-size:250% auto;color:transparent;-webkit-background-clip:text;background-clip:text;animation:shine 5s linear infinite}
-@keyframes shine{to{background-position:250% center}}
-.hero p{max-width:690px;margin:auto;color:var(--muted);font-size:17px;line-height:1.75;animation:up .8s .16s both}
-@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-
-.downloader{
- margin:42px auto 0;padding:12px;width:min(900px,100%);border:1px solid var(--line);
- background:linear-gradient(145deg,rgba(15,23,42,.78),rgba(15,23,42,.48));backdrop-filter:blur(24px);
- border-radius:28px;box-shadow:0 30px 90px rgba(0,0,0,.38);animation:up .9s .25s both
-}
-.inputbox{display:flex;gap:9px;padding:5px;border:1px solid var(--line);background:rgba(0,0,0,.15);border-radius:20px}
-input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;padding:17px;font-size:15px}
-input::placeholder{color:#71809a}
-.mainBtn{
- min-width:165px;padding:15px 18px;background:linear-gradient(135deg,var(--p),var(--p2));
- box-shadow:0 12px 35px rgba(99,102,241,.28);color:#fff;font-weight:900
-}
-button{font-family:inherit;cursor:pointer;transition:.2s}
-button:active{transform:scale(.96)}
-.mainBtn:hover{transform:translateY(-2px);filter:brightness(1.1)}
-.quick{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
-.quickBtns{display:flex;gap:7px}
-.small{padding:9px 12px;border:1px solid var(--line);background:var(--card2);color:#dbeafe;border-radius:12px;font-size:13px}
-.small:hover{background:rgba(255,255,255,.1);transform:translateY(-1px)}
-.tip{color:#64748b;font-size:12px}
-
-.status{display:none;text-align:left;margin-top:13px;padding:14px;border-radius:15px;font-size:14px}
-.status.show{display:block;animation:up .3s both}.info{background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2)}
-.success{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2)}
-.error{background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.2)}
-.spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:7px}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-.result{display:none;margin-top:15px;text-align:left}.result.show{display:block;animation:up .4s both}
-.resultCard{padding:12px;border:1px solid var(--line);background:rgba(0,0,0,.15);border-radius:22px}
-.media{position:relative;background:#000;border-radius:17px;overflow:hidden}
-video{display:block;width:100%;max-height:590px;object-fit:contain}
-.mediaTag{position:absolute;left:12px;top:12px;padding:7px 10px;border-radius:999px;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);font-size:12px}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.action{padding:14px;color:#fff;border-radius:15px;font-weight:900;border:1px solid var(--line)}
-.videoBtn{background:linear-gradient(135deg,var(--p),var(--p2))}.audioBtn{background:linear-gradient(135deg,#0891b2,#0e7490)}
-.action:hover{transform:translateY(-2px);filter:brightness(1.1)}
-
-.section{padding:85px 0 10px}
-.sectionTitle{text-align:center;font-size:34px;letter-spacing:-1.2px}
-.sectionSub{text-align:center;color:var(--muted);margin:10px auto 28px;max-width:620px;line-height:1.6}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.card{padding:23px;border:1px solid var(--line);border-radius:21px;background:rgba(15,23,42,.5);backdrop-filter:blur(14px);transition:.3s;position:relative;overflow:hidden}
-.card:after{content:"";position:absolute;inset:-1px;background:linear-gradient(120deg,transparent,rgba(255,255,255,.07),transparent);transform:translateX(-100%);transition:.65s}
-.card:hover:after{transform:translateX(100%)}.card:hover{transform:translateY(-7px);border-color:rgba(139,92,246,.38);box-shadow:0 22px 55px rgba(0,0,0,.2)}
-.icon{font-size:31px;margin-bottom:14px}.card h3{margin-bottom:7px}.card p{font-size:14px;color:var(--muted);line-height:1.65}
-
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
-.step{text-align:center;padding:22px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:18px}
-.num{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;margin:0 auto 12px;background:linear-gradient(135deg,var(--p),var(--c));font-weight:900}
-
-.faq{max-width:820px;margin:30px auto 0}.faqItem{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);margin-bottom:9px;overflow:hidden}
-.faqQ{width:100%;padding:16px;text-align:left;background:none;color:#fff;border:0;font-weight:800;display:flex;justify-content:space-between}
-.faqA{max-height:0;overflow:hidden;color:var(--muted);padding:0 16px;line-height:1.6;transition:max-height .3s,padding .3s}
-.faqItem.open .faqA{max-height:160px;padding:0 16px 16px}.plus{transition:.25s}.faqItem.open .plus{transform:rotate(45deg)}
-
-footer{margin:75px auto 28px;text-align:center;color:#64748b;font-size:13px}
-footer b{color:#cbd5e1}
-
-.toast{position:fixed;right:20px;bottom:20px;z-index:50;padding:13px 16px;border:1px solid var(--line);border-radius:14px;background:rgba(10,16,34,.9);backdrop-filter:blur(18px);box-shadow:0 15px 45px rgba(0,0,0,.3);transform:translateY(30px);opacity:0;pointer-events:none;transition:.3s}
-.toast.show{transform:none;opacity:1}
-
-@media(max-width:800px){
- .grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}
-}
-@media(max-width:620px){
- nav{top:8px}.navlinks button:first-child{display:none}
- .hero{padding-top:65px}h1{letter-spacing:-2.5px}
- .inputbox{flex-direction:column}.mainBtn{width:100%}.quick{align-items:flex-start;flex-direction:column}
- .grid,.steps{grid-template-columns:1fr}.actions{grid-template-columns:1fr}
-}
+body{font-family:Inter,system-ui,sans-serif;color:var(--txt);min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 10% 10%,#7c3aed35,transparent 28%),radial-gradient(circle at 90% 20%,#06b6d430,transparent 28%),var(--bg)}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background-image:radial-gradient(#fff2 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(#000,transparent 75%)}
+.orb{position:fixed;border-radius:50%;filter:blur(75px);opacity:.18;z-index:-1;animation:float 9s ease-in-out infinite alternate}.o1{width:300px;height:300px;background:#8b5cf6;left:-130px;top:30%}.o2{width:270px;height:270px;background:#06b6d4;right:-120px;top:55%;animation-delay:2s}
+@keyframes float{to{transform:translateY(-55px) scale(1.15)}}
+.wrap{width:min(1120px,92%);margin:auto}
+nav{position:sticky;top:12px;z-index:20;margin-top:16px;padding:13px 15px;border:1px solid var(--line);border-radius:20px;background:#050816b8;backdrop-filter:blur(20px);display:flex;justify-content:space-between;align-items:center;box-shadow:0 18px 60px #0005}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900}.logo{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--p),var(--c));font-size:21px;animation:logo 2.5s infinite}
+@keyframes logo{50%{transform:rotate(5deg) scale(1.08);box-shadow:0 0 35px #22d3ee66}}
+.navbtn,.mini{color:#fff;background:#ffffff09;border:1px solid var(--line);border-radius:12px;padding:10px 13px;cursor:pointer;transition:.25s}.navbtn:hover,.mini:hover{transform:translateY(-2px);background:#ffffff12}
+.hero{text-align:center;padding:88px 0 25px}.pill{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid #8b5cf655;background:#8b5cf611;color:#ddd6fe;font-size:13px;animation:up .7s both}.live{width:7px;height:7px;background:#34d399;border-radius:50%;box-shadow:0 0 14px #34d399}
+h1{font-size:clamp(44px,8vw,88px);line-height:.96;letter-spacing:-5px;margin:22px 0 18px;animation:up .8s .08s both}.grad{background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9,#fff);background-size:250%;color:transparent;background-clip:text;-webkit-background-clip:text;animation:shine 5s linear infinite}@keyframes shine{to{background-position:250%}}
+.hero p{max-width:700px;margin:auto;color:var(--muted);font-size:17px;line-height:1.7;animation:up .8s .16s both}@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.box{width:min(900px,100%);margin:40px auto 0;padding:12px;border:1px solid var(--line);border-radius:28px;background:var(--card);backdrop-filter:blur(24px);box-shadow:0 30px 90px #0006;animation:up .9s .24s both}
+.inputrow{display:flex;gap:8px;padding:5px;border:1px solid var(--line);border-radius:20px;background:#0002}.inputrow input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;padding:17px;font-size:15px}.inputrow input::placeholder{color:#71809a}
+.download{min-width:170px;border:0;border-radius:16px;color:#fff;font-weight:900;font-size:15px;background:linear-gradient(135deg,var(--p),#4f46e5);box-shadow:0 12px 35px #6366f144;cursor:pointer;transition:.2s}.download:hover{transform:translateY(-2px);filter:brightness(1.1)}button:active{transform:scale(.96)!important}
+.tools{display:flex;justify-content:space-between;align-items:center;margin-top:10px}.toolsLeft{display:flex;gap:7px}.hint{font-size:12px;color:#64748b}
+.status{display:none;margin-top:13px;text-align:left;padding:14px;border-radius:15px;font-size:14px}.status.show{display:block;animation:up .3s both}.info{background:#22d3ee0d;border:1px solid #22d3ee33}.ok{background:#34d3990d;border:1px solid #34d39933}.err{background:#fb71850d;border:1px solid #fb718533}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid #ffffff33;border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:7px}@keyframes spin{to{transform:rotate(360deg)}}
+.result{display:none;margin-top:14px;text-align:left}.result.show{display:block;animation:up .4s both}.resultCard{padding:12px;border:1px solid var(--line);border-radius:22px;background:#0002}.media{position:relative;background:#000;border-radius:17px;overflow:hidden}.media video{width:100%;max-height:580px;display:block}.tag{position:absolute;left:12px;top:12px;padding:7px 10px;border-radius:999px;background:#0009;backdrop-filter:blur(8px);font-size:12px}.meta{padding:14px 3px 3px}.meta h3{font-size:18px}.meta p{color:var(--muted);font-size:13px;margin-top:4px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.act{border:1px solid var(--line);border-radius:15px;padding:14px;color:#fff;font-weight:900;cursor:pointer;transition:.2s}.act:hover{transform:translateY(-2px)}.v{background:linear-gradient(135deg,var(--p),#4f46e5)}.a{background:linear-gradient(135deg,#0891b2,#0e7490)}
+.section{padding:82px 0 0}.title{text-align:center;font-size:34px;letter-spacing:-1px}.sub{text-align:center;color:var(--muted);max-width:650px;margin:9px auto 28px;line-height:1.6}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{padding:23px;border:1px solid var(--line);border-radius:21px;background:#0f172a88;backdrop-filter:blur(15px);transition:.3s;overflow:hidden;position:relative}.card:hover{transform:translateY(-7px);border-color:#8b5cf655;box-shadow:0 22px 55px #0004}.card:after{content:"";position:absolute;top:0;left:-120%;width:70%;height:100%;background:linear-gradient(90deg,transparent,#fff0,transparent);transition:.7s}.card:hover:after{left:140%}.ico{font-size:31px;margin-bottom:13px}.card h3{margin-bottom:7px}.card p{font-size:14px;color:var(--muted);line-height:1.65}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.step{text-align:center;padding:21px;border:1px solid var(--line);border-radius:18px;background:#ffffff06}.num{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;margin:0 auto 11px;background:linear-gradient(135deg,var(--p),var(--c));font-weight:900}
+.faq{max-width:820px;margin:auto}.faqitem{margin-bottom:9px;border:1px solid var(--line);border-radius:16px;background:#ffffff06;overflow:hidden}.q{width:100%;padding:16px;border:0;background:none;color:#fff;display:flex;justify-content:space-between;font-weight:800;text-align:left;cursor:pointer}.ans{max-height:0;overflow:hidden;padding:0 16px;color:var(--muted);line-height:1.6;transition:.3s}.faqitem.open .ans{max-height:150px;padding:0 16px 16px}.plus{transition:.25s}.faqitem.open .plus{transform:rotate(45deg)}
+footer{text-align:center;color:#64748b;font-size:13px;margin:75px 0 28px}footer b{color:#cbd5e1}
+.toast{position:fixed;right:18px;bottom:18px;z-index:50;padding:13px 16px;border:1px solid var(--line);border-radius:14px;background:#0a1022ee;backdrop-filter:blur(18px);box-shadow:0 15px 45px #0006;opacity:0;transform:translateY(25px);transition:.3s;pointer-events:none}.toast.show{opacity:1;transform:none}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.hero{padding-top:65px}h1{letter-spacing:-2.5px}.inputrow{flex-direction:column}.download{width:100%;padding:17px}.tools{align-items:flex-start;flex-direction:column;gap:8px}.grid,.steps,.actions{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="orb o1"></div><div class="orb o2"></div>
-
-<div class="container">
-<nav>
- <div class="brand"><div class="brandIcon">🚀</div> Media Save</div>
- <div class="navlinks">
-  <button onclick="go('features')">✨ Features</button>
-  <button onclick="scrollToBox()">⬇️ Download</button>
- </div>
-</nav>
+<div class="wrap">
+<nav><div class="brand"><div class="logo">🚀</div> Media Save</div><button class="navbtn" onclick="scrollBox()">⬇️ Download</button></nav>
 
 <section class="hero">
- <div class="pill"><span class="dot"></span> ⚡ Fast • Simple • Beautiful</div>
- <h1><span class="grad">Save Your Media</span><br>In Seconds. 🚀</h1>
- <p>🎬 Paste a TikTok video link, preview your media, and save the video or available audio — all from one beautiful place.</p>
+<div class="pill"><span class="live"></span> ⚡ Fast • Simple • Beautiful • Free</div>
+<h1><span class="grad">Download Media</span><br>With One Click. 🎬</h1>
+<p>🔗 Paste your TikTok link, wait a moment, preview your media, and save your video or audio. Everything is wrapped in a smooth animated experience. ✨</p>
 
- <div class="downloader" id="downloader">
-  <div class="inputbox">
-   <input id="urlInput" type="url" placeholder="🔗 Paste TikTok video link here..." autocomplete="off">
-   <button class="mainBtn" id="downloadBtn" onclick="downloadMedia()">⬇️ Download</button>
-  </div>
-  <div class="quick">
-   <div class="quickBtns">
-    <button class="small" onclick="pasteLink()">📋 Paste</button>
-    <button class="small" onclick="clearInput()">🧹 Clear</button>
-   </div>
-   <div class="tip">🔒 Simple • ⚡ Fast • 📱 Mobile Friendly</div>
-  </div>
-  <div id="status" class="status"></div>
-
-  <div id="result" class="result">
-   <div class="resultCard">
-    <div class="media">
-     <span class="mediaTag">🎬 Preview Ready</span>
-     <video id="video" controls playsinline></video>
-    </div>
-    <div class="actions">
-     <button class="action videoBtn" id="saveVideo">⬇️ Save Video</button>
-     <button class="action audioBtn" id="saveAudio">🎧 Save MP3</button>
-    </div>
-   </div>
-  </div>
- </div>
-</section>
-
-<section class="section" id="features">
- <h2 class="sectionTitle">✨ Powerful & Simple</h2>
- <p class="sectionSub">Everything is designed to keep the experience clean, fast and easy to use. 💜</p>
- <div class="grid">
-  <article class="card"><div class="icon">🔗</div><h3>Easy Link</h3><p>Paste your TikTok link and start the process with one click.</p></article>
-  <article class="card"><div class="icon">🎬</div><h3>Video Preview</h3><p>Watch the returned video directly on the website before saving.</p></article>
-  <article class="card"><div class="icon">🎧</div><h3>Audio Download</h3><p>When audio is available, save it separately with the MP3 button.</p></article>
-  <article class="card"><div class="icon">📱</div><h3>Mobile Friendly</h3><p>Responsive layout designed for phones, tablets and desktop screens.</p></article>
-  <article class="card"><div class="icon">⚡</div><h3>Fast Interface</h3><p>Lightweight single-page interface with smooth animations and feedback.</p></article>
-  <article class="card"><div class="icon">💫</div><h3>Modern Design</h3><p>Glass cards, gradients, glow effects, hover animations and clean spacing.</p></article>
- </div>
-</section>
-
-<section class="section">
- <h2 class="sectionTitle">🚀 How It Works</h2>
- <p class="sectionSub">Four simple steps from link to media. 👇</p>
- <div class="steps">
-  <div class="step"><div class="num">1</div><b>🔗 Copy Link</b></div>
-  <div class="step"><div class="num">2</div><b>📋 Paste Here</b></div>
-  <div class="step"><div class="num">3</div><b>⚡ Download</b></div>
-  <div class="step"><div class="num">4</div><b>🎉 Save & Enjoy</b></div>
- </div>
-</section>
-
-<section class="section">
- <h2 class="sectionTitle">❓ FAQ</h2>
- <div class="faq">
-  <div class="faqItem"><button class="faqQ">What can I download? <span class="plus">＋</span></button><div class="faqA">Currently this demo is configured for TikTok links and can return a video plus an audio stream when the API provides one.</div></div>
-  <div class="faqItem"><button class="faqQ">Is this mobile friendly? <span class="plus">＋</span></button><div class="faqA">Yes. The layout automatically adapts to phones, tablets and desktop screens.</div></div>
-  <div class="faqItem"><button class="faqQ">Why might a download fail? <span class="plus">＋</span></button><div class="faqA">A third-party API can be unavailable, the link may be invalid, or the browser may block a cross-origin request.</div></div>
- </div>
-</section>
-
-<footer>© 2026 <b>Media Save</b> 🤖 • Built with HTML, CSS & JavaScript • <span>🚀</span></footer>
+<div class="box" id="box">
+<div class="inputrow">
+<input id="url" placeholder="🔗 Paste TikTok video link here..." autocomplete="off">
+<button class="download" id="btn" onclick="downloadMedia()">⬇️ Download Now 🚀</button>
 </div>
+<div class="tools"><div class="toolsLeft"><button class="mini" onclick="paste()">📋 Paste</button><button class="mini" onclick="clearAll()">🧹 Clear</button></div><span class="hint">🔒 Simple • ⚡ Fast • 📱 Responsive</span></div>
+<div id="status" class="status"></div>
+<div id="result" class="result"><div class="resultCard">
+<div class="media"><span class="tag">🎬 Preview Ready</span><video id="video" controls playsinline></video></div>
+<div class="meta"><h3 id="title">🎉 Your Media</h3><p id="author"></p></div>
+<div class="actions"><button class="act v" id="videoBtn">⬇️ Save Video 🎬</button><button class="act a" id="audioBtn">🎧 Save MP3 🎵</button></div>
+</div></div>
+</div>
+</section>
 
+<section class="section" id="features"><h2 class="title">✨ Everything You Need</h2><p class="sub">A clean downloader with animated feedback, responsive design and a simple one-click workflow. 🚀</p>
+<div class="grid">
+<div class="card"><div class="ico">🔗</div><h3>Easy Link</h3><p>Paste a supported TikTok URL and let Media Save handle the rest.</p></div>
+<div class="card"><div class="ico">🎬</div><h3>Video Preview</h3><p>Preview the returned video before saving it to your device.</p></div>
+<div class="card"><div class="ico">🎧</div><h3>Audio Option</h3><p>Save available audio separately with the animated MP3 button.</p></div>
+<div class="card"><div class="ico">📱</div><h3>Mobile Ready</h3><p>Designed to look great on Android, iPhone, tablet and desktop.</p></div>
+<div class="card"><div class="ico">⚡</div><h3>Fast UI</h3><p>Lightweight interface with smooth loading, hover and click animations.</p></div>
+<div class="card"><div class="ico">🌌</div><h3>Premium Look</h3><p>Glass cards, glowing gradients, floating orbs and modern spacing.</p></div>
+</div></section>
+
+<section class="section"><h2 class="title">🚀 How It Works</h2><p class="sub">Just four simple steps. 👇</p>
+<div class="steps"><div class="step"><div class="num">1</div>🔗<br><b>Copy Link</b></div><div class="step"><div class="num">2</div>📋<br><b>Paste Here</b></div><div class="step"><div class="num">3</div>⚡<br><b>Download</b></div><div class="step"><div class="num">4</div>🎉<br><b>Save & Enjoy</b></div></div></section>
+
+<section class="section"><h2 class="title">❓ Frequently Asked</h2><p class="sub">Quick answers for common questions. 💡</p>
+<div class="faq">
+<div class="faqitem"><button class="q">🎬 What does Media Save do? <span class="plus">＋</span></button><div class="ans">It accepts supported TikTok links and requests downloadable media through the website backend.</div></div>
+<div class="faqitem"><button class="q">📱 Does it work on mobile? <span class="plus">＋</span></button><div class="ans">Yes. The page is responsive and designed for small and large screens.</div></div>
+<div class="faqitem"><button class="q">⚠️ Why can a download fail? <span class="plus">＋</span></button><div class="ans">A third-party media service may be unavailable, the link may be invalid, or the source may not return downloadable media.</div></div>
+</div></section>
+
+<footer>© 2026 <b>Media Save</b> 🤖 • Built with HTML, CSS & JavaScript • 🚀</footer>
+</div>
 <div class="toast" id="toast">✅ Done!</div>
 
 <script>
-const API="https://www.tikwm.com/api/?url=";
-const input=document.getElementById("urlInput");
-const statusBox=document.getElementById("status");
-const result=document.getElementById("result");
-const video=document.getElementById("video");
-const btn=document.getElementById("downloadBtn");
-const toast=document.getElementById("toast");
-
-function go(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
-function scrollToBox(){document.getElementById("downloader").scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>input.focus(),400)}
-function toastMsg(t){toast.textContent=t;toast.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>toast.classList.remove("show"),2200)}
-function showStatus(msg,type="info"){statusBox.className="status show "+type;statusBox.innerHTML=msg}
-function clearInput(){input.value="";result.classList.remove("show");statusBox.className="status";video.removeAttribute("src");video.load();input.focus();toastMsg("🧹 Cleared")}
-async function pasteLink(){
- try{input.value=await navigator.clipboard.readText();input.focus();showStatus("📋 Link pasted successfully!","success");toastMsg("📋 Pasted")}
- catch(e){showStatus("⚠️ Clipboard permission is unavailable. Paste the link manually.","error")}
-}
-function validTikTok(url){
-  try{
-    const clean = url.trim();
-    if(!clean) return false;
-
-    // Accept normal TikTok URLs and common short-link formats.
-    const u = new URL(clean);
-    const host = u.hostname.toLowerCase().replace(/^www\\./, "");
-
-    const allowedHosts = [
-      "tiktok.com",
-      "m.tiktok.com",
-      "vm.tiktok.com",
-      "vt.tiktok.com"
-    ];
-
-    return allowedHosts.some(h => host === h || host.endsWith("." + h));
-  }catch{
-    return false;
-  }
-}
-function saveLink(link,name){
- const a=document.createElement("a");a.href=link;a.target="_blank";a.rel="noopener";a.download=name;
- document.body.appendChild(a);a.click();a.remove();toastMsg("⬇️ Download started")
-}
+const input=document.getElementById("url"),statusEl=document.getElementById("status"),result=document.getElementById("result"),video=document.getElementById("video"),btn=document.getElementById("btn"),toast=document.getElementById("toast");
+function scrollBox(){document.getElementById("box").scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>input.focus(),400)}
+function toastMsg(t){toast.textContent=t;toast.classList.add("show");clearTimeout(window._t);window._t=setTimeout(()=>toast.classList.remove("show"),2200)}
+function status(t,c="info"){statusEl.className="status show "+c;statusEl.innerHTML=t}
+function validTikTok(s){try{const u=new URL(s.trim()),h=u.hostname.toLowerCase().replace(/^www\\./,"");return["tiktok.com","m.tiktok.com","vm.tiktok.com","vt.tiktok.com"].some(x=>h===x||h.endsWith("."+x))}catch{return false}}
+async function paste(){try{input.value=await navigator.clipboard.readText();toastMsg("📋 Link pasted!");status("✅ Link pasted successfully!","ok")}catch{status("⚠️ Clipboard permission unavailable. Paste manually.","err")}}
+function clearAll(){input.value="";result.classList.remove("show");statusEl.className="status";video.removeAttribute("src");video.load();toastMsg("🧹 Cleared")}
+function save(url,name){const a=document.createElement("a");a.href=url;a.download=name;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();toastMsg("⬇️ Download started!")}
 async function downloadMedia(){
- const url=input.value.trim();
- if(!url){showStatus("🔗 Please paste a TikTok video link first.","error");return}
- if(!validTikTok(url)){showStatus("❌ Please enter a valid TikTok link.","error");return}
- btn.disabled=true;btn.innerHTML='<span class="spin"></span>Processing';
- result.classList.remove("show");showStatus("⏳ Fetching your media... Please wait.","info");
+ const u=input.value.trim();
+ if(!u)return status("🔗 Please paste a TikTok link first.","err");
+ if(!validTikTok(u))return status("❌ Please enter a valid TikTok link.","err");
+ btn.disabled=true;btn.innerHTML='<span class="spin"></span> Fetching Media... ⏳';result.classList.remove("show");status("⏳ Contacting Media Save server... 🚀","info");
  try{
-  const res=await fetch(API+encodeURIComponent(url));
-  if(!res.ok)throw new Error("API error");
-  const json=await res.json(),data=json?.data;
-  if(!data?.play)throw new Error("No video");
-  video.src=data.play;video.load();
-  document.getElementById("saveVideo").onclick=()=>saveLink(data.play,"media-save-video.mp4");
-  const audio=document.getElementById("saveAudio");
-  if(data.music){audio.style.display="block";audio.onclick=()=>saveLink(data.music,"media-save-audio.mp3")}
-  else audio.style.display="none";
-  result.classList.add("show");showStatus("🎉 Your media is ready! Choose an option below.","success");
-  toastMsg("🎉 Ready!");
+  const r=await fetch("/api/download?url="+encodeURIComponent(u));
+  const data=await r.json();
+  if(!r.ok||!data.ok)throw new Error(data.error||"Download failed");
+  video.src=data.video;video.load();
+  document.getElementById("title").textContent="🎉 "+(data.title||"Your Media");
+  document.getElementById("author").textContent=data.author?("👤 "+data.author):"";
+  document.getElementById("videoBtn").onclick=()=>save(data.video,"media-save-video.mp4");
+  const ab=document.getElementById("audioBtn");
+  if(data.audio){ab.style.display="block";ab.onclick=()=>save(data.audio,"media-save-audio.mp3")}else ab.style.display="none";
+  result.classList.add("show");status("🎉 Media is ready! Choose Video or MP3 below. ⬇️","ok");toastMsg("🎉 Ready to save!");
   result.scrollIntoView({behavior:"smooth",block:"center"});
- }catch(e){
-  console.error(e);
-  showStatus("❌ Could not fetch this media. The API may be unavailable or your browser may block the request (CORS).","error");
-  toastMsg("⚠️ Download failed");
- }finally{btn.disabled=false;btn.innerHTML="⬇️ Download"}
+ }catch(e){console.error(e);status("❌ "+e.message,"err");toastMsg("⚠️ Something went wrong")}
+ finally{btn.disabled=false;btn.innerHTML="⬇️ Download Now 🚀"}
 }
 input.addEventListener("keydown",e=>{if(e.key==="Enter")downloadMedia()});
-document.querySelectorAll(".faqQ").forEach(q=>q.addEventListener("click",()=>q.parentElement.classList.toggle("open")));
+document.querySelectorAll(".q").forEach(q=>q.onclick=()=>q.parentElement.classList.toggle("open"));
 </script>
 </body>
  </html>
