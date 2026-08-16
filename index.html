@@ -231,8 +231,25 @@ async function pasteLink(){
  catch(e){showStatus("⚠️ Clipboard permission is unavailable. Paste the link manually.","error")}
 }
 function validTikTok(url){
- try{const u=new URL(url);return /(^|\\.)tiktok\\.com$/i.test(u.hostname)||/(^|\\.)vm\\.tiktok\\.com$/i.test(u.hostname)}
- catch{return false}
+  try{
+    const clean = url.trim();
+    if(!clean) return false;
+
+    // Accept normal TikTok URLs and common short-link formats.
+    const u = new URL(clean);
+    const host = u.hostname.toLowerCase().replace(/^www\\./, "");
+
+    const allowedHosts = [
+      "tiktok.com",
+      "m.tiktok.com",
+      "vm.tiktok.com",
+      "vt.tiktok.com"
+    ];
+
+    return allowedHosts.some(h => host === h || host.endsWith("." + h));
+  }catch{
+    return false;
+  }
 }
 function saveLink(link,name){
  const a=document.createElement("a");a.href=link;a.target="_blank";a.rel="noopener";a.download=name;
@@ -267,4 +284,4 @@ input.addEventListener("keydown",e=>{if(e.key==="Enter")downloadMedia()});
 document.querySelectorAll(".faqQ").forEach(q=>q.addEventListener("click",()=>q.parentElement.classList.toggle("open")));
 </script>
 </body>
-                          </html>
+ </html>
