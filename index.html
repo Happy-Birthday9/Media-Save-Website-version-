@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media Save — TikTok Downloader</title>
+<meta name="description" content="Download TikTok videos quickly with Media Save.">
+<style>
+:root{
+  --bg:#070b16;
+  --card:rgba(15,23,42,.72);
+  --border:rgba(255,255,255,.12);
+  --text:#f8fafc;
+  --muted:#94a3b8;
+  --accent:#7c3aed;
+  --accent2:#06b6d4;
+  --danger:#fb7185;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 15%,rgba(124,58,237,.25),transparent 28%),
+    radial-gradient(circle at 85% 20%,rgba(6,182,212,.18),transparent 28%),
+    radial-gradient(circle at 50% 100%,rgba(236,72,153,.12),transparent 32%),
+    var(--bg);
+  overflow-x:hidden;
+}
+body:before,body:after{
+  content:"";position:fixed;width:280px;height:280px;border-radius:50%;
+  filter:blur(80px);opacity:.18;pointer-events:none;z-index:-1;
+  animation:float 8s ease-in-out infinite alternate;
+}
+body:before{background:#7c3aed;left:-120px;top:35%}
+body:after{background:#06b6d4;right:-120px;top:55%;animation-delay:2s}
+@keyframes float{to{transform:translateY(-45px) scale(1.15)}}
+
+nav{
+  width:min(1120px,92%);margin:22px auto 0;
+  padding:14px 18px;border:1px solid var(--border);
+  background:rgba(7,11,22,.62);backdrop-filter:blur(18px);
+  border-radius:20px;display:flex;align-items:center;justify-content:space-between;
+  position:relative;z-index:5;box-shadow:0 15px 50px rgba(0,0,0,.22);
+}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+.logoIcon{
+  width:40px;height:40px;border-radius:13px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 8px 28px rgba(124,58,237,.35);animation:pulse 2.5s infinite;
+}
+@keyframes pulse{50%{box-shadow:0 8px 38px rgba(6,182,212,.45)}}
+.navBtn{
+  border:1px solid var(--border);background:rgba(255,255,255,.05);color:#fff;
+  padding:9px 13px;border-radius:12px;cursor:pointer;transition:.25s;
+}
+.navBtn:hover{transform:translateY(-2px);background:rgba(255,255,255,.1)}
+
+.hero{width:min(980px,92%);margin:78px auto 0;text-align:center}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 13px;
+  border:1px solid rgba(124,58,237,.35);background:rgba(124,58,237,.1);
+  border-radius:999px;color:#c4b5fd;font-size:13px;animation:fadeUp .7s both;
+}
+.hero h1{
+  font-size:clamp(42px,8vw,82px);line-height:.98;margin:20px 0 18px;
+  letter-spacing:-4px;animation:fadeUp .8s .1s both;
+}
+.gradient{background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9,#fff);
+  background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 5s linear infinite}
+@keyframes shine{to{background-position:250% center}}
+.hero p{max-width:650px;margin:auto;color:var(--muted);font-size:17px;line-height:1.7;animation:fadeUp .8s .2s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+.downloader{
+  width:min(850px,94%);margin:42px auto 0;padding:10px;
+  border:1px solid var(--border);background:var(--card);backdrop-filter:blur(22px);
+  border-radius:25px;box-shadow:0 25px 80px rgba(0,0,0,.35);
+  animation:fadeUp .9s .3s both;
+}
+.inputRow{display:flex;gap:10px}
+input{
+  min-width:0;flex:1;border:1px solid var(--border);outline:none;
+  background:rgba(255,255,255,.055);color:#fff;border-radius:17px;
+  padding:18px;font-size:15px;transition:.25s;
+}
+input:focus{border-color:rgba(124,58,237,.8);box-shadow:0 0 0 4px rgba(124,58,237,.1)}
+button{
+  border:0;color:#fff;font-weight:800;cursor:pointer;border-radius:17px;
+  transition:transform .18s,filter .18s,box-shadow .18s;
+}
+button:active{transform:scale(.96)}
+.downloadBtn{
+  min-width:150px;background:linear-gradient(135deg,var(--accent),#4f46e5);
+  box-shadow:0 12px 30px rgba(124,58,237,.3);
+}
+.downloadBtn:hover{filter:brightness(1.12);transform:translateY(-2px)}
+.tools{display:flex;gap:8px;margin-top:10px}
+.toolBtn{padding:10px 14px;background:rgba(255,255,255,.055);border:1px solid var(--border);font-size:13px}
+.toolBtn:hover{background:rgba(255,255,255,.1);transform:translateY(-1px)}
+
+.status{display:none;margin:16px 4px 4px;padding:14px;border-radius:15px;font-size:14px;text-align:left}
+.status.show{display:block;animation:fadeUp .35s both}
+.status.info{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2)}
+.status.error{background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.2)}
+.status.success{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2)}
+
+.spinner{
+  display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.25);
+  border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:7px
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.result{display:none;margin-top:18px;text-align:left;animation:fadeUp .45s both}
+.result.show{display:block}
+.resultCard{
+  border:1px solid var(--border);background:rgba(255,255,255,.035);
+  border-radius:20px;padding:16px;overflow:hidden;
+}
+.videoWrap{position:relative;background:#000;border-radius:16px;overflow:hidden}
+video{display:block;width:100%;max-height:570px;object-fit:contain}
+.resultActions{display:flex;gap:10px;margin-top:12px}
+.action{
+  flex:1;padding:13px;background:linear-gradient(135deg,var(--accent),#4f46e5)
+}
+.action.audio{background:linear-gradient(135deg,#0891b2,#0e7490)}
+.action:hover{filter:brightness(1.1);transform:translateY(-2px)}
+
+.features{width:min(1050px,92%);margin:85px auto 70px}
+.features h2{text-align:center;font-size:32px;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.feature{
+  padding:24px;border:1px solid var(--border);background:rgba(15,23,42,.5);
+  backdrop-filter:blur(15px);border-radius:20px;transition:.3s;
+}
+.feature:hover{transform:translateY(-7px);border-color:rgba(124,58,237,.45);box-shadow:0 20px 45px rgba(0,0,0,.2)}
+.icon{font-size:30px;margin-bottom:15px}
+.feature h3{margin-bottom:8px}.feature p{color:var(--muted);font-size:14px;line-height:1.6}
+footer{width:min(1050px,92%);margin:0 auto 30px;text-align:center;color:#64748b;font-size:13px}
+footer b{color:#cbd5e1}
+
+@media(max-width:700px){
+  nav{margin-top:12px}.hero{margin-top:55px}.hero h1{letter-spacing:-2px}
+  .inputRow{flex-direction:column}.downloadBtn{width:100%;padding:17px}
+  .grid{grid-template-columns:1fr}.features{margin-top:65px}
+  .resultActions{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><div class="logoIcon">⬇️</div> Media Save</div>
+  <button class="navBtn" onclick="scrollToDownloader()">Download</button>
+</nav>
+
+<main>
+<section class="hero">
+  <span class="badge">⚡ Fast • Simple • Animated</span>
+  <h1><span class="gradient">Download Media</span><br>Without Hassle.</h1>
+  <p>Paste a TikTok video link below and get your media ready to watch and save.</p>
+
+  <div class="downloader" id="downloader">
+    <div class="inputRow">
+      <input id="urlInput" type="url" placeholder="Paste TikTok video link here..." autocomplete="off">
+      <button class="downloadBtn" id="downloadBtn" onclick="downloadMedia()">⬇️ Download</button>
+    </div>
+    <div class="tools">
+      <button class="toolBtn" onclick="pasteLink()">📋 Paste</button>
+      <button class="toolBtn" onclick="clearInput()">✕ Clear</button>
+    </div>
+    <div id="status" class="status"></div>
+
+    <div id="result" class="result">
+      <div class="resultCard">
+        <div class="videoWrap">
+          <video id="video" controls playsinline></video>
+        </div>
+        <div class="resultActions">
+          <button class="action" id="saveVideo">⬇️ Save Video</button>
+          <button class="action audio" id="saveAudio">🎧 Save MP3</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <h2>✨ Everything You Need</h2>
+  <div class="grid">
+    <article class="feature"><div class="icon">🔗</div><h3>Easy Link</h3><p>Just paste a supported TikTok URL and start the download process.</p></article>
+    <article class="feature"><div class="icon">🎬</div><h3>Video Preview</h3><p>Preview the returned video directly on the website before saving it.</p></article>
+    <article class="feature"><div class="icon">🎧</div><h3>Audio Option</h3><p>If the API provides an audio stream, you can save the audio separately.</p></article>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 <b>Media Save</b> • Built for fast media downloading.</footer>
+
+<script>
+const API = "https://www.tikwm.com/api/?url=";
+const input = document.getElementById("urlInput");
+const statusBox = document.getElementById("status");
+const result = document.getElementById("result");
+const video = document.getElementById("video");
+const btn = document.getElementById("downloadBtn");
+
+function scrollToDownloader(){
+  document.getElementById("downloader").scrollIntoView({behavior:"smooth",block:"center"});
+  setTimeout(()=>input.focus(),450);
+}
+function showStatus(message,type="info"){
+  statusBox.className="status show "+type;
+  statusBox.innerHTML=message;
+}
+function clearInput(){
+  input.value="";
+  result.classList.remove("show");
+  statusBox.className="status";
+  video.removeAttribute("src");
+  video.load();
+  input.focus();
+}
+async function pasteLink(){
+  try{
+    const text=await navigator.clipboard.readText();
+    input.value=text;
+    input.focus();
+    showStatus("📋 Link pasted successfully.","success");
+  }catch(e){
+    showStatus("⚠️ Clipboard access is unavailable. Please paste the link manually.","error");
+  }
+}
+function validTikTok(url){
+  try{
+    const u=new URL(url);
+    return /(^|\\.)tiktok\\.com$/i.test(u.hostname) || /(^|\\.)vm\\.tiktok\\.com$/i.test(u.hostname);
+  }catch{return false}
+}
+function setDownload(link, filename){
+  const a=document.createElement("a");
+  a.href=link;
+  a.target="_blank";
+  a.rel="noopener";
+  a.download=filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+async function downloadMedia(){
+  const url=input.value.trim();
+  if(!url) return showStatus("🔗 Please paste a TikTok video link first.","error");
+  if(!validTikTok(url)) return showStatus("❌ Please enter a valid TikTok link.","error");
+
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span>Loading';
+  result.classList.remove("show");
+  showStatus("⏳ Getting your media... Please wait.","info");
+
+  try{
+    const res=await fetch(API+encodeURIComponent(url));
+    if(!res.ok) throw new Error("API request failed");
+    const json=await res.json();
+    const data=json?.data;
+
+    if(!data?.play) throw new Error("No video returned");
+
+    video.src=data.play;
+    video.load();
+
+    document.getElementById("saveVideo").onclick=()=>setDownload(data.play,"media-save-video.mp4");
+
+    const audioBtn=document.getElementById("saveAudio");
+    if(data.music){
+      audioBtn.style.display="block";
+      audioBtn.onclick=()=>setDownload(data.music,"media-save-audio.mp3");
+    }else{
+      audioBtn.style.display="none";
+    }
+
+    result.classList.add("show");
+    showStatus("✅ Video is ready! Preview it or use the buttons below.","success");
+    result.scrollIntoView({behavior:"smooth",block:"center"});
+  }catch(err){
+    console.error(err);
+    showStatus("❌ Could not fetch this video. The API may be unavailable or your browser may block the request (CORS).","error");
+  }finally{
+    btn.disabled=false;
+    btn.innerHTML="⬇️ Download";
+  }
+}
+
+input.addEventListener("keydown",e=>{
+  if(e.key==="Enter") downloadMedia();
+});
+</script>
+</body>
+  </html>
